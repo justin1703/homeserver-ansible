@@ -28,7 +28,7 @@ Es bietet ein schlankes, sicheres Setup für Docker-Container und Bare-Metal-Die
 | Home Assistant | Hausautomation und Smart-Home-Steuerung |
 | Watchtower | Automatische Updates für Docker-Container |
 | Pi-hole | Netzwerk-Werbeblocker und DNS-Filterung |
-| **Checkmk** | Monitoring-Lösung zur Überwachung von Hosts, Containern und Diensten |
+| Checkmk | Monitoring-Lösung zur Überwachung von Hosts, Containern und Diensten |
 
 ### Bare-Metal
 
