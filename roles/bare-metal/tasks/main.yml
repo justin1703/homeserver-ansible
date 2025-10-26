@@ -1,0 +1,11 @@
+# ---------------------------
+# Plex
+# ---------------------------
+- include_tasks: plex.yml
+  when: plex_enabled
+
+# ---------------------------
+# Nut-Server
+# ---------------------------
+- include_tasks: nut-server.yml
+  when: nutserver_enabled

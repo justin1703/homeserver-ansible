@@ -1,0 +1,20 @@
+- name: Ensure Watchtower directory exists
+  ansible.builtin.file:
+    path: "{{ watchtower_deploy_dir }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+
+- name: Deploy Watchtower Compose file
+  ansible.builtin.template:
+    src: watchtower/watchtower-compose.yml.j2
+    dest: "{{ watchtower_deploy_dir }}/docker-compose.yml"
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start Watchtower container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ watchtower_deploy_dir }}"

@@ -1,0 +1,23 @@
+- name: Ensure PeaNUT directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+  loop:
+    - "{{ peanut_deploy_dir }}"
+    - "{{ peanut_volume_config }}"
+
+- name: Deploy PeaNUT Compose file
+  ansible.builtin.template:
+    src: peanut.yml.j2
+    dest: "{{ peanut_deploy_dir }}/docker-compose.yml"
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start PeaNUT container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: "{{ peanut_deploy_dir }}"

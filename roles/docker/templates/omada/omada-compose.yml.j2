@@ -1,0 +1,24 @@
+services:
+  {{ omada_container_name }}:
+    container_name: {{ omada_container_name }}
+    image: {{ omada_image }}
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 8192
+    stop_grace_period: 60s
+    network_mode: host
+    environment:
+{% for key, value in omada_environment.items() %}
+      - {{ key }}={{ value }}
+{% endfor %}
+    volumes:
+{% for vol in omada_volumes %}
+      - "{{ vol.src }}:{{ vol.dest }}"
+{% endfor %}
+
+volumes:
+{% for vol_name in omada_named_volumes %}
+  {{ vol_name }}:
+{% endfor %}

@@ -1,0 +1,14 @@
+# Email:    admin@example.com
+# Password: changeme
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+{% for p in npm_ports %}
+      - "{{ p }}"
+{% endfor %}
+    volumes:
+      - "/srv/docker/npm/data:/data"
+      - "/srv/docker/npm/letsencrypt:/etc/letsencrypt"

@@ -1,0 +1,19 @@
+services:
+  {{ pihole_container_name }}:
+    container_name: {{ pihole_container_name }}
+    image: {{ pihole_image }}
+    ports:
+{% for p in pihole_ports %}
+      - "{{ p }}"
+{% endfor %}
+    environment:
+      TZ: '{{ pihole_timezone }}'
+      FTLCONF_webserver_api_password: '{{ pihole_password }}'
+      FTLCONF_dns_listeningMode: 'all'
+    volumes:
+      - '{{ pihole_volume_data }}:/etc/pihole'
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+    restart: unless-stopped

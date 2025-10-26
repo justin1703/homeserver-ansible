@@ -1,0 +1,15 @@
+# Global settings
+pollinterval = {{ ups_pollinterval }}
+maxretry = {{ ups_maxretry }}
+
+{% for ups in ups_devices %}
+[{{ ups.name }}]
+    driver = "{{ ups.driver }}"
+    port = "{{ ups.port }}"
+    vendorid = "{{ ups.vendorid }}"
+    productid = "{{ ups.productid }}"
+    product = "{{ ups.product }}"
+    serial = "{{ ups.serial }}"
+    vendor = "{{ ups.vendor }}"
+    bus = "{{ ups.bus }}"
+{% endfor %}

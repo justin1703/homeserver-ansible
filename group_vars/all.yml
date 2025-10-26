@@ -1,0 +1,2 @@
+server_ip: "{{ ansible_host }}"
+server_user: "{{ ansible_user }}"

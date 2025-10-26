@@ -1,0 +1,8 @@
+---
+- name: Install and configure Docker on Debian servers
+  hosts: debian_servers
+  become: yes
+
+  roles:
+    - ../roles/common
+    - ../roles/docker

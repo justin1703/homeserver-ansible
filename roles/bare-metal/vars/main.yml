@@ -1,0 +1,41 @@
+# ---------------------------
+# Plex
+# ---------------------------
+plex_enabled: true
+plex_download_url: "https://downloads.plex.tv/plex-media-server-new/1.42.2.10156-f737b826c/debian/plexmediaserver_1.42.2.10156-f737b826c_amd64.deb"
+plex_deb_dest: "/tmp/plexmediaserver.deb"
+
+# ---------------------------
+# Nut-Server
+# ---------------------------
+nutserver_enabled: true
+
+ups_name: usv-rack
+ups_host: localhost
+ups_user: admin
+ups_password: changeme
+ups_role: master
+ups_run_as_user: root
+
+nut_users:
+  - name: admin
+    password: changeme
+    actions: "SET"
+    instcmds: "ALL"
+
+ups_pollinterval: 1
+ups_maxretry: 3
+ups_devices:
+  - name: usv-rack
+    driver: usbhid-ups
+    port: auto
+    vendorid: "051D"
+    productid: "0002"
+    product: "Back-UPS BX750MI  FW:295202G -302202G"
+    serial: "9B2326A06617"
+    vendor: "American Power Conversion"
+    bus: "002"
+
+upsd_listen_ip: "{{ server_ip }}"
+upsd_listen_port: 3493
+

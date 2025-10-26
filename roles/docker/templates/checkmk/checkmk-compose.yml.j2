@@ -1,0 +1,21 @@
+services:
+  checkmk:
+    image: checkmk/check-mk-raw:2.4.0p14
+    container_name: checkmk
+    restart: always
+    ports:
+{% for p in checkmk_ports %}
+      - "{{ p }}"
+{% endfor %}
+    tmpfs:
+      - /opt/omd/sites/cmk/tmp:uid=1000,gid=1000
+    volumes:
+      - checkmk_data:/omd/sites
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      CMK_SITE_ID: cmk
+      CMK_PASSWORD: '{{ checkmk_password }}'
+      CMK_LIVESTATUS_TCP: "on"
+
+volumes:
+  checkmk_data:

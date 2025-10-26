@@ -1,0 +1,35 @@
+- name: Ensure Plex-Media Directory exists
+  ansible.builtin.file:
+    path: /mnt/PLex-Media
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Check if Plex Media Server is installed
+  ansible.builtin.shell: dpkg -s plexmediaserver
+  register: plex_installed
+  ignore_errors: yes
+
+- name: Download Plex Media Server .deb if not already downloaded
+  ansible.builtin.get_url:
+    url: "{{ plex_download_url }}"
+    dest: "{{ plex_deb_dest }}"
+    mode: '0644'
+  when: plex_installed.rc != 0
+  register: plex_download
+  until: plex_download is succeeded
+  retries: 3
+  delay: 10
+
+- name: Install Plex Media Server if not installed
+  ansible.builtin.apt:
+    deb: "{{ plex_deb_dest }}"
+    state: present
+  when: plex_installed.rc != 0
+
+- name: Ensure Plex service is enabled and running
+  ansible.builtin.service:
+    name: plexmediaserver
+    state: started
+    enabled: yes

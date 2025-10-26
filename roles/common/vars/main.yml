@@ -1,0 +1,14 @@
+---
+common_packages:
+  - curl
+  - vim
+  - git
+  - htop
+  - btop
+  - net-tools
+  - sudo
+  - wget
+  - ncdu
+  - ca-certificates
+  - ansible
+  - screen

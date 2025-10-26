@@ -1,0 +1,87 @@
+---
+- name: Ensure NUT packages are installed
+  ansible.builtin.apt:
+    name:
+      - nut-server
+      - nut-client
+      - nut-monitor
+    state: present
+    update_cache: yes
+
+- name: Ensure /etc/nut exists
+  ansible.builtin.file:
+    path: /etc/nut
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Deploy ups.conf template
+  ansible.builtin.template:
+    src: nut-server/ups.conf.j2
+    dest: /etc/nut/ups.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nut-server
+
+- name: Deploy nut.conf template
+  ansible.builtin.template:
+    src: nut-server/nut.conf.j2
+    dest: /etc/nut/nut.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nut-server
+
+- name: Deploy upsd.conf template
+  ansible.builtin.template:
+    src: nut-server/upsd.conf.j2
+    dest: /etc/nut/upsd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nut-server
+
+- name: Deploy upsd.users template
+  ansible.builtin.template:
+    src: nut-server/upsd.users.j2
+    dest: /etc/nut/upsd.users
+    owner: root
+    group: root
+    mode: '0600'
+  notify: restart nut-server
+
+- name: Deploy upsmon.conf template
+  ansible.builtin.template:
+    src: nut-server/upsmon.conf.j2
+    dest: /etc/nut/upsmon.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nut-server
+
+- name: Set ownership of all NUT configs
+  ansible.builtin.file:
+    path: /etc/nut
+    state: directory
+    recurse: yes
+    owner: root
+    group: nut
+    mode: '0750'
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: Ensure nut-server service is enabled and running
+  ansible.builtin.service:
+    name: nut-server
+    state: started
+    enabled: yes
+
+- name: Ensure nut-monitor service is enabled and running
+  ansible.builtin.service:
+    name: nut-monitor
+    state: started
+    enabled: yes

@@ -1,0 +1,16 @@
+services:
+  peanut:
+    image: brandawg93/peanut:latest
+    container_name: peanut
+    restart: unless-stopped
+
+    volumes:
+      - "{{ peanut_volume_config }}:/config"
+
+    ports:
+{% for p in peanut_ports %}
+      - "{{ p }}"
+{% endfor %}
+
+    environment:
+      WEB_PORT: "{{ peanut_web_port }}"

@@ -1,0 +1,37 @@
+---
+- name: Create Nextcloud data directory
+  ansible.builtin.file:
+    path: "{{ nextcloud_data }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Create Nextcloud deployment directory
+  ansible.builtin.file:
+    path: /srv/docker/nextcloud
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+
+- name: Create www directory for Nextcloud
+  ansible.builtin.file:
+    path: "{{ nextcloud_storage }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Deploy Nextcloud Compose file
+  ansible.builtin.template:
+    src: nextcloud-aio.yml.j2
+    dest: /srv/docker/nextcloud/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start Nextcloud container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/nextcloud

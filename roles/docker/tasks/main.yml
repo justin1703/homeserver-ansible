@@ -1,0 +1,64 @@
+# ---------------------------
+# Docker
+# ---------------------------
+- include_tasks: install-docker.yml
+
+# ---------------------------
+# Portainer
+# ---------------------------
+- include_tasks: portainer.yml
+  when: portainer_enabled
+
+# ---------------------------
+# Nextcloud
+# ---------------------------
+- include_tasks: nextcloud.yml
+  when: nextcloud_enabled
+
+# ---------------------------
+# Pihole
+# ---------------------------
+- include_tasks: pihole.yml
+  when: pihole_enabled
+
+# ---------------------------
+# Homeassistant
+# ---------------------------
+- include_tasks: homeassistant.yml
+  when: homeassistant_enabled
+
+# ---------------------------
+# Nginx
+# ---------------------------
+- include_tasks: npm.yml
+  when: npm_enabled
+
+# ---------------------------
+# Homepage
+# ---------------------------
+- include_tasks: homepage.yml
+  when: homepage_enabled
+
+# ---------------------------
+# Peanut
+# ---------------------------
+- include_tasks: peanut.yml
+  when: peanut_enabled
+
+# ---------------------------
+# Watchtower
+# ---------------------------
+- include_tasks: watchtower.yml
+  when: watchtower_enabled
+
+# ---------------------------
+# Omada-Controller
+# ---------------------------
+- include_tasks: omada.yml
+  when: omada_enabled
+
+# ---------------------------
+# checkmk
+# ---------------------------
+- include_tasks: checkmk.yml
+  when: checkmk_enabled

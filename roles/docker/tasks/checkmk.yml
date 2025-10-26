@@ -1,0 +1,52 @@
+---
+- name: Create checkmk directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+  loop:
+    - "{{ checkmk_volume_data }}"
+
+- name: Deploy checkmk Compose file
+  ansible.builtin.template:
+    src: checkmk/checkmk-compose.yml.j2
+    dest: /srv/docker/checkmk/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start checkmk container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/checkmk
+
+# ---------------------------------------------
+# Agent Installation
+# ---------------------------------------------
+
+- name: Download Checkmk agent
+  ansible.builtin.get_url:
+    url: "http://{{ checkmk_agent_ip }}:{{ checkmk_agent_port }}/cmk/check_mk/agents/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
+    dest: "/tmp/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
+    mode: '0644'
+    force: no 
+
+- name: Install Checkmk agent package
+  ansible.builtin.apt:
+    deb: "/tmp/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
+    state: present
+
+# ---------------------------------------------
+# SNMP
+# ---------------------------------------------
+- name: Configure SNMP daemon with template
+  ansible.builtin.template:
+    src: checkmk/snmpd.conf.j2
+    dest: /etc/snmp/snmpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart SNMP

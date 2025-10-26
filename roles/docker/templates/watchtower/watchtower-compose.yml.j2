@@ -1,0 +1,12 @@
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    environment:
+      WATCHTOWER_POLL_INTERVAL: "{{ watchtower_update_interval }}"
+      WATCHTOWER_CLEANUP: "{{ watchtower_cleanup | lower }}"

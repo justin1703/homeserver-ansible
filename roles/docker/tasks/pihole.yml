@@ -1,0 +1,23 @@
+---
+- name: Create Pi-hole directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+  loop:
+    - "{{ pihole_volume_data }}"
+
+- name: Deploy Pi-hole Compose file
+  ansible.builtin.template:
+    src: pihole-compose.yml.j2
+    dest: /srv/docker/pihole/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start Pi-hole container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/pihole

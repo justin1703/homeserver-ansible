@@ -1,0 +1,39 @@
+- name: Ensure homepage directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+  loop:
+    - /srv/docker/homepage
+    - /srv/docker/homepage/config
+
+- name: Deploy Homepage services.yaml
+  ansible.builtin.template:
+    src: homepage/homepage-services.yaml.j2
+    dest: /srv/docker/homepage/config/services.yaml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Deploy Homepage settings.yaml
+  ansible.builtin.template:
+    src: homepage/homepage-settings.yaml.j2
+    dest: /srv/docker/homepage/config/settings.yaml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+  
+- name: Deploy Homepage Compose file
+  ansible.builtin.template:
+    src: homepage/homepage.yml.j2
+    dest: /srv/docker/homepage/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start Homepage container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/homepage

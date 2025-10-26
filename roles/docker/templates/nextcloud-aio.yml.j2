@@ -1,0 +1,35 @@
+volumes:
+  nextcloud:
+  db:
+
+services:
+  db:
+    image: mariadb:10.6
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_root_password }}"
+      MYSQL_PASSWORD: "{{ mysql_password }}"
+      MYSQL_DATABASE: "{{ mysql_database }}"
+      MYSQL_USER: "{{ mysql_user }}"
+
+  app:
+    image: nextcloud
+    restart: always
+    ports:
+{% for p in nextcloud_ports %}
+      - "{{ p }}"
+{% endfor %}
+    depends_on:
+      - db
+    volumes:
+      - {{ nextcloud_config }}:/var/www/html
+      - "{{ nextcloud_data }}:/var/www/html/data"
+      - "{{ nextcloud_storage }}:/mnt/Nextcloud-Data"
+    environment:
+      MYSQL_PASSWORD: "{{ mysql_password }}"
+      MYSQL_DATABASE: "{{ mysql_database }}"
+      MYSQL_USER: "{{ mysql_user }}"
+      MYSQL_HOST: db

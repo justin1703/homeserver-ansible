@@ -1,0 +1,9 @@
+---
+- name: Basic setup for Debian servers
+  hosts: debian_servers
+  become: yes
+
+  roles:
+    - ../roles/common
+    - ../roles/bare-metal
+    - ../roles/docker

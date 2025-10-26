@@ -1,0 +1,30 @@
+---
+- name: Ensure Home Assistant config directory exists
+  file:
+    path: "{{ homeassistant_config_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Create Home Assistant Docker deployment directory
+  file:
+    path: /srv/docker/homeassistant
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Deploy Pi-hole Compose file
+  ansible.builtin.template:
+    src: homeassistant.yml.j2
+    dest: /srv/docker/homeassistant/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Deploy Home Assistant container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/homeassistant
+

@@ -1,0 +1,7 @@
+# ---------------------------
+# checkmk
+# ---------------------------
+- name: Restart SNMP
+  ansible.builtin.service:
+    name: snmpd
+    state: restarted
