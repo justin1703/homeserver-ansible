@@ -21,9 +21,9 @@ Es bietet ein schlankes, sicheres Setup für Docker-Container und Bare-Metal-Die
 | Dienst | Beschreibung |
 |--------|-------------|
 | Omada Controller | Verwaltung von Netzwerkgeräten (APs, Switches, Router) |
-| Peanut | Media-Management und Bibliotheksverwaltung |
+| Peanut | Monitoring-Frontend für USV-Daten vom NUT-Server und Media-Management |
 | Nextcloud | Private Cloud für Dateien, Kalender und Kontakte |
-| Homepage | Persönliche Webseite für Informationen oder Projekte |
+| Homepage | Webseite für Services |
 | Nginx Proxy Manager | Reverse Proxy und SSL-Management für Webservices |
 | Home Assistant | Hausautomation und Smart-Home-Steuerung |
 | Watchtower | Automatische Updates für Docker-Container |
@@ -52,3 +52,4 @@ Es bietet ein schlankes, sicheres Setup für Docker-Container und Bare-Metal-Die
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
+ansible-playbook -i inventory.ini roles/server-install.yml
