@@ -23,22 +23,6 @@
     chdir: /srv/docker/checkmk
 
 # ---------------------------------------------
-# Agent Installation
-# ---------------------------------------------
-
-- name: Download Checkmk agent
-  ansible.builtin.get_url:
-    url: "http://{{ checkmk_agent_ip }}:{{ checkmk_agent_port }}/cmk/check_mk/agents/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
-    dest: "/tmp/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
-    mode: '0644'
-    force: no 
-
-- name: Install Checkmk agent package
-  ansible.builtin.apt:
-    deb: "/tmp/check-mk-agent_{{ checkmk_agent_version }}_all.deb"
-    state: present
-
-# ---------------------------------------------
 # SNMP
 # ---------------------------------------------
 - name: Configure SNMP daemon with template

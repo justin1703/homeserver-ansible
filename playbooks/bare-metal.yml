@@ -3,6 +3,9 @@
   hosts: debian_servers
   become: yes
 
+  vars_files:
+    - ../vault/secret.yml
+
   roles:
     - ../roles/common
     - ../roles/bare-metal
