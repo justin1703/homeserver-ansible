@@ -22,8 +22,8 @@ nextcloud_ports:
 nextcloud_data: /var/www/html/data
 nextcloud_config: /var/www/html/
 nextcloud_storage: /mnt/Nextcloud-Data
-mysql_root_password: changeme
-mysql_password: changeme
+mysql_root_password: "{{ vault_mysql_root_password }}"
+mysql_password: "{{ vault_mysql_password }}"
 mysql_database: nextcloud
 mysql_user: nextcloud
 
@@ -38,7 +38,7 @@ pihole_ports:
   - "53:53/udp"
   - "8081:80/tcp"
 pihole_timezone: "Europe/Berlin"
-pihole_password: "changeme"
+pihole_password: "{{ vault_pihole_password }}"
 pihole_volume_data: /srv/docker/pihole/etc-pihole
 
 # ---------------------------
@@ -51,6 +51,7 @@ homeassistant_config_dir: /mnt/homeassistant/config
 # Nginx
 # ---------------------------
 npm_enabled: true
+npm_user_password: "{{ vault_npm_user_password }}"
 npm_ports:
   - "80:80"
   - "81:81"
@@ -127,7 +128,7 @@ checkmk_enabled: true
 checkmk_ports:
   - "8280:5000"
   - "8000:8000"
-checkmk_password: "changeme"
+checkmk_password:  "{{ vault_checkmk_password }}"
 checkmk_volume_data: /srv/docker/checkmk
 checkmk_agent_ip: "{{ server_ip }}"
 checkmk_agent_port: "{{ checkmk_ports[0].split(':')[0] }}"
