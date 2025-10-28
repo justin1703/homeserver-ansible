@@ -1,55 +1,101 @@
-# Homeserver Ansible Setup
+# 🖥️ Homeserver Ansible Setup
 
 Dieses Ansible-Projekt automatisiert die Installation, Konfiguration und Verwaltung eines privaten Homeservers auf **Debian 13**.  
 Es bietet ein schlankes, sicheres Setup für Docker-Container und Bare-Metal-Dienste, inklusive Monitoring, SNMP-Integration und automatischen Updates.
 
 ---
 
-## Ziel
+## 🎯 Ziel
 
 - Reduzierung unnötiger Dienste und Komplexität  
 - Einheitliches Deployment auf neuen Servern  
 - Sicheres Management von Docker-Containern, Bare-Metal-Services und Monitoring  
-- Sicherheitsbewusstes Setup: minimale Root-Nutzung, abgesicherte SSH-Zugänge, Firewall-Konfiguration
+- Sicherheitsbewusstes Setup: minimale Root-Nutzung, abgesicherte SSH-Zugänge
+- Einfaches Re-Deployment auf neuer Hardware oder nach Neuinstallation  
 
 ---
 
-## Unterstützte Dienste
+## 🧩 Server-Hardware & Umgebung
 
-### Docker-Container
+Der Homeserver wurde auf moderne, effiziente Hardware umgestellt, um eine gute Balance aus **Leistung, Energieeffizienz und Zukunftssicherheit** zu erreichen.
 
-| Dienst | Beschreibung |
-|--------|-------------|
-| Omada Controller | Verwaltung von Netzwerkgeräten (APs, Switches, Router) |
-| Peanut | Monitoring-Frontend für USV-Daten vom NUT-Server und Media-Management |
-| Nextcloud | Private Cloud für Dateien, Kalender und Kontakte |
-| Homepage | Webseite für Services |
-| Nginx Proxy Manager | Reverse Proxy und SSL-Management für Webservices |
-| Home Assistant | Hausautomation und Smart-Home-Steuerung |
-| Watchtower | Automatische Updates für Docker-Container |
-| Pi-hole | Netzwerk-Werbeblocker und DNS-Filterung |
-| Checkmk | Monitoring-Lösung zur Überwachung von Hosts, Containern und Diensten |
+### ⚙️ Hardware-Spezifikationen
 
-### Bare-Metal
+| Komponente | Beschreibung |
+|-------------|--------------|
+| **CPU** | AMD Ryzen 5 5600G – APU mit integrierter Grafik und sehr gutem Energieverbrauch |
+| **RAM** | 128 GB DDR4 @ 3200 MT/s – ursprünglich für viele VMs unter Proxmox, bietet jetzt viel Puffer für Container und Caching |
+| **Systemlaufwerk** | 2 TB NVMe SSD – hohe I/O-Performance für System, Docker-Container und Datenbanken |
+| **Datenspeicher** | 2 × 4 TB HDD – massig Platz für Medien, Backups und persistenten Speicher |
+| **Netzwerkkarte** | Dual-Port 10 Gbit SFP+ – ideal für hohen Datendurchsatz im Heimnetz oder zwischen NAS und Backup-System |
+| **Mainboard** | Gigabyte B550M AORUS ELITE AX – stabil, gut ausgestattet und zukunftssicher |
+| **Kühler** | NZXT Low-Profile CPU Cooler – leise und platzsparend |
+| **Gehäuse** | Jonsbo N4 NAS-Gehäuse – kompaktes Design mit Platz für mehrere 3,5"-HDDs |
 
-| Dienst | Beschreibung |
-|--------|-------------|
-| Plex | Media-Server für Filme, Serien und Musik |
-| NUT-Server | USV-Monitoring und Energieverwaltung |
+### 💡 Systemumgebung
+
+- **Betriebssystem:** Debian 13 (Trixie)  
+- **Verwaltung:** vollständig über Ansible automatisiert  
+- **Dienste:** Mischung aus Docker-Containern und Bare-Metal-Anwendungen  
+- **Monitoring:** Checkmk mit SNMP-Integration  
+- **Netzwerk:** statische IP, 10 Gbit, Zugriff via SSH-Schlüssel  
 
 ---
 
-## Installation
+## 🔄 Von Proxmox zu Debian
 
-### Voraussetzungen
+Der Server lief ursprünglich unter **Proxmox VE** mit mehreren virtuellen Maschinen.  
+Der Wechsel zu **Debian 13** erfolgte, um das Setup zu vereinfachen und den Ressourcenverbrauch zu senken.
 
-- Debian 13 Server mit SSH-Zugang  
-- Ansible auf dem Rechner installiert  
-- Benutzer für Deployment
+**Gründe für den Wechsel:**
+- Reduktion unnötiger Dienste und Virtualisierungs-Overhead  
+- Direkter Zugriff auf Hardware ohne VM-Schicht  
+- Weniger Komplexität bei Updates und Backups  
+- Potenziell geringerer Stromverbrauch  
+- Bessere Integration mit Ansible  
 
-### Schritt 1: Repository klonen
+Das neue Setup läuft nativ auf Debian und nutzt Docker-Container für alle modularen Dienste – leichtgewichtig, konsistent und einfach wartbar.
+
+---
+
+## 🧱 Unterstützte Dienste
+
+### 🐳 Docker-Container
+
+| Dienst | Beschreibung |
+|--------|---------------|
+| **Omada Controller** | Verwaltung von Netzwerkgeräten (Access Points, Switches, Router) |
+| **Peanut** | Frontend zur Visualisierung von USV-Daten (über NUT-Server) und Medienstatus |
+| **Nextcloud** | Private Cloud für Dateien, Kalender, Kontakte und Backups |
+| **Homepage** | Übersichtsseite für lokale Services mit Icons und Links |
+| **Nginx Proxy Manager** | Reverse Proxy mit SSL-Zertifikatsverwaltung |
+| **Home Assistant** | Smart-Home-Steuerung und Automatisierungen |
+| **Watchtower** | Automatische Updates für alle Container |
+| **Pi-hole** | DNS-Filter und Werbeblocker für das gesamte Netzwerk |
+| **Checkmk** | Monitoring-Plattform für Hosts, Container und Dienste (inkl. Agent-Installation) |
+
+### 🧰 Bare-Metal
+
+| Dienst | Beschreibung |
+|--------|---------------|
+| **Plex Media Server** | Lokaler Medienserver für Filme, Serien und Musik |
+| **NUT-Server** | Kommunikation mit der USV, Bereitstellung von Statusdaten über SNMP/Peanut |
+
+---
+
+## ⚙️ Installation
+
+### 🧾 Voraussetzungen
+
+- Debian 13 mit SSH-Zugang  
+- Benutzer mit `sudo`-Rechten  
+- Ansible auf dem Steuerrechner installiert  
+- SSH-Schlüssel-Authentifizierung eingerichtet  
+
+---
+
+### 🚀 Schritt 1: Repository klonen
 
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
-ansible-playbook -i inventory.ini roles/server-install.yml
