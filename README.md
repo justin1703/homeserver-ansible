@@ -15,6 +15,43 @@ Es bietet ein schlankes, sicheres Setup für Docker-Container und Bare-Metal-Die
 
 ---
 
+## 🔮 Zukünftige Ziele
+
+Geplante Erweiterungen und Verbesserungen für Sicherheit, Effizienz und Wartung des Servers:
+
+🔒 Sicherheit & Hardening
+
+ - SSH-Hardening (PermitRootLogin no, PasswordAuthentication no, nur SSH-Keys)
+ - Fail2Ban zum Schutz vor Brute-Force-Angriffen
+ - Automatische Sicherheitsupdates (unattended-upgrades)
+ - Firewall-Regeln via UFW oder nftables
+
+🌐 Netzwerk & Firewall
+
+ - Standardregel: „deny all incoming, allow outgoing“
+ - Freigabe nur definierter Ports (SSH, 80, 443 etc.)
+ - VPN-Zugang (WireGuard) für Remote-Management
+ - Automatischer Portscan mit nmap nach Deployments
+
+⚡ Energieeffizienz
+
+ - CPU-Power-Management (cpufrequtils, Governor-Anpassung)
+ - HDD-Spin-Down über hdparm
+ - Automatisches Herunterfahren über NUT-Server bei Stromausfall
+
+📊 Monitoring & Transparenz
+
+ - Erweiterte Checkmk-Checks (SMART, Temp, Load)
+ - SNMP-Integration für Netzwerkgeräte und USV
+ - Discord-Benachrichtigungen bei System- oder Containerfehlern
+ - Docker-Health-Checks & Watchtower-Reporting
+
+🧩 Struktur & Skalierbarkeit
+
+ - Weitere Modularisierung der Rollen (z. B. Firewall, Backup, Security)
+
+---
+
 ## 🧩 Server-Hardware & Umgebung
 
 Der Homeserver wurde auf moderne, effiziente Hardware umgestellt, um eine gute Balance aus **Leistung, Energieeffizienz und Zukunftssicherheit** zu erreichen.
