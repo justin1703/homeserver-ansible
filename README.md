@@ -99,3 +99,4 @@ Das neue Setup läuft nativ auf Debian und nutzt Docker-Container für alle modu
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
+ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
