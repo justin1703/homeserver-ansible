@@ -6,8 +6,21 @@
 
 - name: Install common packages
   ansible.builtin.apt:
-    name: "{{ common_packages }}"
+    name:
+       - curl
+       - vim
+       - git
+       - htop
+       - btop
+       - net-tools
+       - sudo
+       - wget
+       - ncdu
+       - ca-certificates
+       - ansible
+       - screen
     state: present
+    update_cache: yes
 
 - name: Disable SSH root login
   ansible.builtin.lineinfile:
