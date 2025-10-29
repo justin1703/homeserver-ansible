@@ -66,7 +66,6 @@
 # ---------------------------
 # Firewall Setup (UFW)
 # ---------------------------
-
 - name: Ensure UFW is installed
   ansible.builtin.apt:
     name: ufw
@@ -131,3 +130,39 @@
 - name: Ensure UFW is enabled
   ufw:
     state: enabled
+
+# ---------------------------
+# auto-cpufreq
+# ---------------------------
+- name: Install dependencies for auto-cpufreq
+  ansible.builtin.apt:
+    name: git
+    state: present
+    update_cache: yes
+
+- name: Clone auto-cpufreq repo
+  ansible.builtin.git:
+    repo: https://github.com/AdnanHodzic/auto-cpufreq.git
+    dest: /opt/auto-cpufreq
+    version: main
+    force: yes
+
+- name: Run auto-cpufreq installer
+  ansible.builtin.command:
+    cmd: ./auto-cpufreq-installer
+    chdir: /opt/auto-cpufreq
+  become: yes
+  args:
+    creates: /usr/bin/auto-cpufreq
+
+- name: Ensure auto-cpufreq service is installed
+  ansible.builtin.command:
+    cmd: auto-cpufreq --install
+  become: yes
+  args:
+    creates: /etc/systemd/system/auto-cpufreq.service
+
+- name: Set CPU governor to powersave
+  ansible.builtin.command:
+    cmd: auto-cpufreq --force powersave
+  become: yes
