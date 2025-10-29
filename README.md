@@ -21,17 +21,12 @@ Geplante Erweiterungen und Verbesserungen für Sicherheit, Effizienz und Wartung
 
 🔒 Sicherheit & Hardening
 
- - SSH-Hardening (PermitRootLogin no, PasswordAuthentication no, nur SSH-Keys)
  - Fail2Ban zum Schutz vor Brute-Force-Angriffen
  - Automatische Sicherheitsupdates (unattended-upgrades)
- - Firewall-Regeln via UFW oder nftables
 
 🌐 Netzwerk & Firewall
 
- - Standardregel: „deny all incoming, allow outgoing“
- - Freigabe nur definierter Ports (SSH, 80, 443 etc.)
  - VPN-Zugang (WireGuard) für Remote-Management
- - Automatischer Portscan mit nmap nach Deployments
 
 ⚡ Energieeffizienz
 
