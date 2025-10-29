@@ -79,7 +79,7 @@ upsd_listen_port: 3493
 # auto-cpufreq
 # ---------------------------
 auto_cpufreq_repo: "https://github.com/AdnanHodzic/auto-cpufreq.git"
-auto_cpufreq_version: "main"
+auto_cpufreq_version: "master"
 auto_cpufreq_dest: "/opt/auto-cpufreq"
 
 # ---------------------------
