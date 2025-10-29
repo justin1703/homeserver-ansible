@@ -89,7 +89,7 @@
     policy: allow
     direction: outgoing
 
-- name: Allow Docker public ports for allowed subnets
+- name: Allow Docker public ports for allowed subnet
   ufw:
     rule: allow
     port: "{{ item }}"
@@ -101,7 +101,7 @@
   vars:
     subnet: "{{ allowed_subnets | join(',') }}"  
 
-- name: Allow Bare-Metal public ports for allowed subnets
+- name: Allow Bare-Metal public ports for allowed subnet
   ufw:
     rule: allow
     port: "{{ item.port | default(item) }}"
@@ -112,6 +112,17 @@
     loop_var: item
   vars:
     subnet: "{{ allowed_subnets | join(',') }}"
+
+- name: Allow selected ports for 10.0.10.0/24
+  ufw:
+    rule: allow
+    port: "{{ item.port | default(item) }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    src: 10.0.10.0/24
+  loop:
+    - 8123    # Homeassistant
+    - { port: 53, proto: tcp }
+    - { port: 53, proto: udp }
 
 - name: Enable UFW logging
   ufw:

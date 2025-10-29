@@ -29,7 +29,6 @@ bare_metal_public_ports:
 # Subnetze, die externen Zugriff auf die Public Ports erhalten
 allowed_subnets:
   - "10.0.1.0/24"
-  - "10.0.10.0/24"
 
 # ---------------------------
 # Bare-Metal
