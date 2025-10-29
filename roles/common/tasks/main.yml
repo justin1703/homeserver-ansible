@@ -142,27 +142,7 @@
 
 - name: Clone auto-cpufreq repo
   ansible.builtin.git:
-    repo: https://github.com/AdnanHodzic/auto-cpufreq.git
-    dest: /opt/auto-cpufreq
-    version: main
+    repo: "{{ auto_cpufreq_repo }}"
+    dest: "{{ auto_cpufreq_dest }}"
+    version: "{{ auto_cpufreq_version }}"
     force: yes
-
-- name: Run auto-cpufreq installer
-  ansible.builtin.command:
-    cmd: ./auto-cpufreq-installer
-    chdir: /opt/auto-cpufreq
-  become: yes
-  args:
-    creates: /usr/bin/auto-cpufreq
-
-- name: Ensure auto-cpufreq service is installed
-  ansible.builtin.command:
-    cmd: auto-cpufreq --install
-  become: yes
-  args:
-    creates: /etc/systemd/system/auto-cpufreq.service
-
-- name: Set CPU governor to powersave
-  ansible.builtin.command:
-    cmd: auto-cpufreq --force powersave
-  become: yes
