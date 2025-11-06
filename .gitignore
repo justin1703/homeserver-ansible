@@ -1,2 +1,3 @@
 inventory.ini
 vault/
+roles/docker/templates/homepage/homepage-services.yaml.j2
