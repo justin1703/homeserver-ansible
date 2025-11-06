@@ -1,11 +1,11 @@
-# 🖥️ Homeserver Ansible Setup
+# Homeserver Ansible Setup
 
 This Ansible project automates the installation, configuration, and management of a private home server running **Debian 13**.  
 It provides a lightweight, secure setup for Docker containers and bare-metal services, including monitoring, SNMP integration, and automatic updates.
 
 ---
 
-## 🎯 Goals
+## Goals
 
 - Reduce unnecessary services and complexity  
 - Unified deployment across new servers  
@@ -15,43 +15,43 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 
 ---
 
-## 🔮 Future Goals
+## Future Goals
 
 Planned extensions and improvements for security, efficiency, and maintenance:
 
-🔒 **Security & Hardening**
+**Security & Hardening**
 
  - Fail2Ban for protection against brute-force attacks  
  - Automatic security updates (unattended-upgrades)
 
-🌐 **Network & Firewall**
+**Network & Firewall**
 
  - VPN access (WireGuard) for remote management  
 
-⚡ **Energy Efficiency**
+**Energy Efficiency**
 
  - CPU power management (cpufrequtils, governor tuning)  
  - HDD spin-down via hdparm  
  - Automatic shutdown via NUT server during power outages  
 
-📊 **Monitoring & Transparency**
+**Monitoring & Transparency**
 
  - Extended Checkmk checks (SMART, temperature, load)  
  - SNMP integration for network devices and UPS  
  - Discord notifications for system or container failures  
  - Docker health checks & Watchtower reporting  
 
-🧩 **Structure & Scalability**
+**Structure & Scalability**
 
  - Further modularization of roles (e.g., firewall, backup, security)
 
 ---
 
-## 🧩 Server Hardware & Environment
+## Server Hardware & Environment
 
 The home server has been upgraded to modern, efficient hardware to achieve a good balance of **performance, energy efficiency, and future readiness**.
 
-### ⚙️ Hardware Specifications
+### Hardware Specifications
 
 | Component | Description |
 |------------|-------------|
@@ -64,7 +64,7 @@ The home server has been upgraded to modern, efficient hardware to achieve a goo
 | **Cooler** | NZXT low-profile CPU cooler – quiet and space-saving |
 | **Case** | Jonsbo N4 NAS case – compact design with room for multiple 3.5" HDDs |
 
-### 💡 System Environment
+### System Environment
 
 - **Operating System:** Debian 13 (Trixie)  
 - **Management:** Fully automated via Ansible  
@@ -74,7 +74,7 @@ The home server has been upgraded to modern, efficient hardware to achieve a goo
 
 ---
 
-## 🔄 From Proxmox to Debian
+## From Proxmox to Debian
 
 The server originally ran under **Proxmox VE** with multiple virtual machines.  
 The move to **Debian 13** was made to simplify the setup and reduce resource usage.
@@ -90,9 +90,9 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-## 🧱 Supported Services
+## Supported Services
 
-### 🐳 Docker Containers
+### Docker Containers
 
 | Service | Description |
 |----------|-------------|
@@ -106,7 +106,7 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 | **Pi-hole** | Network-wide DNS filter and ad blocker |
 | **Checkmk** | Monitoring platform for hosts, containers, and services (including agent installation) |
 
-### 🧰 Bare-Metal
+### Bare-Metal
 
 | Service | Description |
 |----------|-------------|
@@ -115,9 +115,9 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-## ⚙️ Installation
+## Installation
 
-### 🧾 Requirements
+### Requirements
 
 - Debian 13 with SSH access  
 - User with `sudo` privileges  
@@ -126,7 +126,7 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-### 🚀 Step 1: Clone the Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone <REPO_URL>
