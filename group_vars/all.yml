@@ -17,6 +17,7 @@ docker_public_ports:
   - 8088    # Omada Management HTTP
   - 8043    # Omada Management HTTPS
   - 8843    # Omada Portal HTTPS
+  - 8123    # Homeassistant
   - { port: 27001, proto: udp }  # 27001-29817 Omada Controller ports for device connections
   - { port: 29810, proto: udp }
   - { port: 29811, proto: tcp }
@@ -26,7 +27,6 @@ docker_public_ports:
   - { port: 29815, proto: tcp }
   - { port: 29816, proto: tcp }
   - { port: 29817, proto: tcp }
-  - 8123    # Homeassistant
 
 # Bare-Metal-Ports, die nach außen freigegeben werden
 bare_metal_public_ports:
