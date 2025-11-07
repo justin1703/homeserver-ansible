@@ -1,0 +1,69 @@
+services:
+  broker:
+    image: redis:7
+    container_name: paperless-redis
+    restart: unless-stopped
+    volumes:
+      - redisdata:/data
+
+  db:
+    image: postgres:17
+    container_name: paperless-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: '{{ paperless_db_password }}'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  gotenberg:
+    image: gotenberg/gotenberg:8.19
+    container_name: paperless-gotenberg
+    restart: unless-stopped
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+
+  tika:
+    image: apache/tika:latest
+    container_name: paperless-tika
+    restart: unless-stopped
+
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-web
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+      - gotenberg
+      - tika
+    ports:
+      - "{{ paperless_ports[0] | default('8082:8000') }}"
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: db
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+      PAPERLESS_URL: "{{ paperless_url }}"
+      PAPERLESS_TIME_ZONE: "{{ paperless_time_zone }}"
+      PAPERLESS_OCR_LANGUAGE: "{{ paperless_ocr_language }}"
+      PAPERLESS_SECRET_KEY: "{{ paperless_secret_key }}"
+      PAPERLESS_DBPASS: '{{ paperless_db_password }}'
+    volumes:
+      - data:/usr/src/paperless/data
+      - "{{ paperless_media_dir }}:/usr/src/paperless/media"
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+
+volumes:
+  data:
+  pgdata:
+  redisdata:
+
+networks:
+  default:
+    name: paperless_network

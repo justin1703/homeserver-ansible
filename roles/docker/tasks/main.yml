@@ -62,3 +62,9 @@
 # ---------------------------
 - include_tasks: checkmk.yml
   when: checkmk_enabled
+
+# ---------------------------
+# Paperless
+# ---------------------------
+- include_tasks: paperless.yml
+  when: paperless_enabled

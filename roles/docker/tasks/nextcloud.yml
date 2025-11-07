@@ -7,15 +7,23 @@
     group: www-data
     mode: '0755'
 
-- name: Create Nextcloud deployment directory
+- name: Create Nextcloud docker-deployment directory
   ansible.builtin.file:
-    path: /srv/docker/nextcloud
+    path: "{{ nextcloud_docker_data }}"
     state: directory
     owner: "{{ docker_user }}"
     group: "{{ docker_group }}"
     mode: '0755'
 
-- name: Create www directory for Nextcloud
+- name: Create Nextcloud config directory
+  ansible.builtin.file:
+    path: "{{ nextcloud_config }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+- name: Create storage directory for Nextcloud
   ansible.builtin.file:
     path: "{{ nextcloud_storage }}"
     state: directory

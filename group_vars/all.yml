@@ -14,6 +14,7 @@ docker_public_ports:
   - "{{ peanut_web_port }}"
   - "{{ checkmk_ports[0].split(':')[0] }}"
   - "{{ npm_ports[0].split(':')[0] }}"
+  - "{{ paperless_ports[0].split(':')[0] }}"
   - 8088    # Omada Management HTTP
   - 8043    # Omada Management HTTPS
   - 8843    # Omada Portal HTTPS
@@ -119,6 +120,7 @@ nextcloud_ports:
 nextcloud_data: /var/www/html/data
 nextcloud_config: /var/www/html/
 nextcloud_storage: /mnt/Nextcloud-Data
+nextcloud_docker_data: /srv/docker/nextcloud
 mysql_root_password: "{{ vault_mysql_root_password }}"
 mysql_password: "{{ vault_mysql_password }}"
 mysql_database: nextcloud
@@ -234,3 +236,17 @@ checkmk_agent_version: "2.4.0p14-1"
 snmp_server_ip: "{{ server_ip }}"
 snmp_community: "public"
 snmp_listen_port: 161
+
+# ---------------------------
+# paperless
+# ---------------------------
+paperless_enabled: true
+paperless_ports:
+  - "8082:8000"
+paperless_db_password: "{{ vault_paperless_db_password }}"
+paperless_media_dir: "/mnt/paperless"
+paperless_volume_data: /srv/docker/paperless
+paperless_url: "https://10.0.1.28"
+paperless_time_zone: "Europe/Berlin"
+paperless_ocr_language: "deu"
+paperless_secret_key: "{{ vault_paperless_secret_key }}"

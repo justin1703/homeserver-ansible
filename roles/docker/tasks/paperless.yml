@@ -1,0 +1,31 @@
+---
+- name: Create Paperless Docker directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+  loop:
+    - "{{ paperless_volume_data }}"
+
+- name: Create storage directory for Paperless
+  ansible.builtin.file:
+    path: "{{ paperless_media_dir }}"
+    state: directory
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0755'
+
+- name: Deploy Paperless Compose file
+  ansible.builtin.template:
+    src: paperless/paperless-compose.yml.j2
+    dest: /srv/docker/paperless/docker-compose.yml
+    owner: "{{ docker_user }}"
+    group: "{{ docker_group }}"
+    mode: '0644'
+
+- name: Start Paperless container
+  ansible.builtin.command:
+    cmd: docker compose up -d
+    chdir: /srv/docker/paperless
