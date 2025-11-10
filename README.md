@@ -105,7 +105,7 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 | **Watchtower** | Automatic updates for all containers |
 | **Pi-hole** | Network-wide DNS filter and ad blocker |
 | **Checkmk** | Monitoring platform for hosts, containers, and services (including agent installation) |
-| **Paperless** | Storing digital Documents |
+| **Paperless** | Digital document management with OCR, tagging, and searchable archive |
 
 ### Bare-Metal
 
