@@ -127,9 +127,18 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-### Step 1: Clone the Repository
+### Step 1: Add the User which should execute the playbook to sudo
+
+```bash
+sudo usermod -aG sudo <username>
+sudo visudo
+<username> ALL=(ALL) NOPASSWD:ALL
+```
+
+### Step 2: Clone the Repository
 
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
+```
