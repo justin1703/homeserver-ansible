@@ -140,5 +140,10 @@ sudo visudo
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
+```
+
+### Step 3: Execute the playbook
+
+```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
 ```
