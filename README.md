@@ -135,6 +135,32 @@ sudo visudo
 <username> ALL=(ALL) NOPASSWD:ALL
 ```
 
+### Optional: Setup RAID 1 for storage
+
+> ⚠️ **Warning:** This will delete all data on `/dev/sda` and `/dev/sdb`. Only proceed if you are sure.
+
+```bash
+# 1. Create GPT partition tables on both drives
+parted /dev/sda -- mklabel gpt
+parted /dev/sda -- mkpart primary 0% 100%
+
+parted /dev/sdb -- mklabel gpt
+parted /dev/sdb -- mkpart primary 0% 100%
+
+# 2. Create RAID 1 array with both partitions
+mdadm --create --verbose /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
+
+# Check RAID sync progress
+cat /proc/mdstat
+
+# 3. Format the RAID array with ext4 filesystem
+mkfs.ext4 /dev/md0
+
+# 4. Create mount point and mount the RAID
+mkdir -p /mnt/data
+mount /dev/md0 /mnt/data
+```
+
 ### Step 2: Clone the Repository
 
 ```bash
