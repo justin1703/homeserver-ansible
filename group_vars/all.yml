@@ -144,7 +144,7 @@ pihole_volume_data: /srv/docker/pihole/etc-pihole
 # Homeassistant
 # ---------------------------
 homeassistant_enabled: true
-homeassistant_config_dir: /mnt/data/homeassistant/config
+homeassistant_config_dir: /srv/docker/homeassistant/config
 
 # ---------------------------
 # Nginx
