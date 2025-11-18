@@ -19,6 +19,7 @@
        - ca-certificates
        - ansible
        - screen
+       - snmpd
     state: present
     update_cache: yes
 
