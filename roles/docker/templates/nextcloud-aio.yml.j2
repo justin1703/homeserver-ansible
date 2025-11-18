@@ -27,7 +27,7 @@ services:
     volumes:
       - {{ nextcloud_config }}:/var/www/html
       - "{{ nextcloud_data }}:/var/www/html/data"
-      - "{{ nextcloud_storage }}:/mnt/Nextcloud-Data"
+      - "{{ nextcloud_storage }}:/mnt/data/Nextcloud-Data"
     environment:
       MYSQL_PASSWORD: "{{ mysql_password }}"
       MYSQL_DATABASE: "{{ mysql_database }}"

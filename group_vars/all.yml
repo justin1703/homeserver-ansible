@@ -119,7 +119,7 @@ nextcloud_ports:
   - "8080:80"
 nextcloud_data: /var/www/html/data
 nextcloud_config: /var/www/html/
-nextcloud_storage: /mnt/Nextcloud-Data
+nextcloud_storage: /mnt/data/Nextcloud-Data
 nextcloud_docker_data: /srv/docker/nextcloud
 mysql_root_password: "{{ vault_mysql_root_password }}"
 mysql_password: "{{ vault_mysql_password }}"
@@ -144,7 +144,7 @@ pihole_volume_data: /srv/docker/pihole/etc-pihole
 # Homeassistant
 # ---------------------------
 homeassistant_enabled: true
-homeassistant_config_dir: /mnt/homeassistant/config
+homeassistant_config_dir: /mnt/data/homeassistant/config
 
 # ---------------------------
 # Nginx
@@ -244,7 +244,7 @@ paperless_enabled: true
 paperless_ports:
   - "8082:8000"
 paperless_db_password: "{{ vault_paperless_db_password }}"
-paperless_media_dir: "/mnt/paperless"
+paperless_media_dir: "/mnt/data/paperless"
 paperless_volume_data: /srv/docker/paperless
 paperless_url: "https://10.0.1.28"
 paperless_time_zone: "Europe/Berlin"

@@ -1,6 +1,6 @@
 - name: Ensure Plex-Media Directory exists
   ansible.builtin.file:
-    path: /mnt/PLex-Media
+    path: /mnt/data/PLex-Media
     state: directory
     owner: root
     group: root
