@@ -117,6 +117,20 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
+## Current Problems
+
+### Nginx can't reach Nextcloud 
+```bash
+ufw allow from 172.21.0.0/16 to any port 8080 proto tcp
+```
+
+### Peanut can't reach NUT-Server
+```bash
+ufw allow from 172.21.0.2/16 to any port 3493 proto tcp
+```
+
+---
+
 ## Installation
 
 ### Requirements
