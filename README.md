@@ -4,7 +4,8 @@ This Ansible project automates the installation, configuration, and management o
 It provides a lightweight, secure setup for Docker containers and bare-metal services, including monitoring, SNMP integration, and automatic updates.
 
 ---
-
+> ⚠️ **Warning:** There are currently some Issues with Docker Version 29, please use the latest 28.xx Version.
+---
 ## Goals
 
 - Reduce unnecessary services and complexity  
