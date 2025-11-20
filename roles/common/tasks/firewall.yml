@@ -1,0 +1,64 @@
+- name: Ensure UFW is installed
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: yes
+
+- name: Reset UFW to defaults
+  ansible.builtin.command:
+    cmd: ufw --force reset
+
+- name: Set default incoming policy to deny
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+
+- name: Set default outgoing policy to allow
+  ufw:
+    state: enabled
+    policy: allow
+    direction: outgoing
+
+- name: Allow Docker public ports for allowed subnet
+  ufw:
+    rule: allow
+    port: "{{ item.port | default(item) }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    src: "{{ subnet }}"
+  loop: "{{ docker_public_ports }}"
+  loop_control:
+    loop_var: item
+  vars:
+    subnet: "{{ allowed_subnets | join(',') }}"  
+
+- name: Allow Bare-Metal public ports for allowed subnet
+  ufw:
+    rule: allow
+    port: "{{ item.port | default(item) }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    src: "{{ subnet }}"
+  loop: "{{ bare_metal_public_ports }}"
+  loop_control:
+    loop_var: item
+  vars:
+    subnet: "{{ allowed_subnets | join(',') }}"
+
+- name: Allow selected ports for 10.0.10.0/24
+  ufw:
+    rule: allow
+    port: "{{ item.port | default(item) }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    src: 10.0.10.0/24
+  loop:
+    - 8123    # Homeassistant
+    - { port: 53, proto: tcp }
+    - { port: 53, proto: udp }
+
+- name: Enable UFW logging
+  ufw:
+    logging: on
+
+- name: Ensure UFW is enabled
+  ufw:
+    state: enabled

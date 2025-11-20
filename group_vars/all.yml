@@ -2,8 +2,15 @@ server_ip: "{{ ansible_host }}"
 server_user: "{{ ansible_user }}"
 
 # ---------------------------
+# SSH
+# ---------------------------
+ssh_enabled: true
+
+# ---------------------------
 # Firewall
 # ---------------------------
+
+firewall_enabled: true
 
 # Docker-Ports, die nach außen freigegeben werden
 docker_public_ports:
