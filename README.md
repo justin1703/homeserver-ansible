@@ -120,18 +120,18 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 ## Current Problems
 This section provides all necessary UFW rules and other important changes which I need to add into this project afterwards.
 
-### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager.
+### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager:
 ```bash
 ufw allow from 172.21.0.0/16 to any port 8080 proto tcp
 ```
 
-### Allow external access for Nextcloud
+### Allow external access for Nextcloud:
 ```bash
 ufw allow 80/tcp
 ufw allow 443/tcp
 ```
 
-### Allow Peanut to reach NUT-Server
+### Allow Peanut to reach NUT-Server:
 ```bash
 ufw allow from 172.21.0.2/16 to any port 3493 proto tcp
 ```
