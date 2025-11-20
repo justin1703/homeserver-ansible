@@ -120,7 +120,7 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 ## Current Problems
 This section provides all necessary UFW rules and other important changes which I need to add into this project afterwards.
 
-### Allow Nginx Proxy Manager to reach Nextcloud
+### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager.
 ```bash
 ufw allow from 172.21.0.0/16 to any port 8080 proto tcp
 ```
