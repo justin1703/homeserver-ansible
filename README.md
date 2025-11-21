@@ -6,6 +6,28 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 ---
 > ⚠️ **Warning:** There are currently some Issues with Docker Version 29, please use the latest 28.xx Version.
 ---
+
+# Table of Contents
+
+- [Goals](#goals)
+- [Server Hardware & Environment](#server-hardware--environment)
+  - [Hardware Specifications](#hardware-specifications)
+  - [System Environment](#system-environment)
+- [From Proxmox to Debian](#from-proxmox-to-debian)
+- [Supported Services](#supported-services)
+  - [Docker Containers](#docker-containers)
+  - [Bare-Metal](#bare-metal)
+- [Problems which might occure due to the Firewall Rules](#problems-which-might-occure-due-to-the-firewall-rules)
+- [How to enable or disable the Services](#how-to-enable-or-disable-the-services-which-should-be-installed-with-the-playbook)
+- [Installation](#installation)
+  - [Requirements](#requirements)
+  - [Step 1: Add the User to sudo](#step-1-add-the-user-which-should-execute-the-playbook-to-sudo)
+  - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
+  - [Step 2: Clone the Repository](#step-2-clone-the-repository)
+  - [Step 3: Execute the playbook](#step-3-execute-the-playbook)
+
+---
+
 ## Goals
 
 - Reduce unnecessary services and complexity  
