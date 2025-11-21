@@ -16,38 +16,6 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 
 ---
 
-## Future Goals
-
-Planned extensions and improvements for security, efficiency, and maintenance:
-
-**Security & Hardening**
-
- - Fail2Ban for protection against brute-force attacks  
- - Automatic security updates (unattended-upgrades)
-
-**Network & Firewall**
-
- - VPN access (WireGuard) for remote management  
-
-**Energy Efficiency**
-
- - CPU power management (cpufrequtils, governor tuning)  
- - HDD spin-down via hdparm  
- - Automatic shutdown via NUT server during power outages  
-
-**Monitoring & Transparency**
-
- - Extended Checkmk checks (SMART, temperature, load)  
- - SNMP integration for network devices and UPS  
- - Discord notifications for system or container failures  
- - Docker health checks & Watchtower reporting  
-
-**Structure & Scalability**
-
- - Further modularization of roles (e.g., firewall, backup, security)
-
----
-
 ## Server Hardware & Environment
 
 The home server has been upgraded to modern, efficient hardware to achieve a good balance of **performance, energy efficiency, and future readiness**.
@@ -117,7 +85,7 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-## Current Problems
+## Problems which might occure due to the Firewall Rules
 This section provides all necessary UFW rules and other important changes which I need to add into this project afterwards.
 
 ### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager:
@@ -134,6 +102,17 @@ ufw allow 443/tcp
 ### Allow Peanut to reach NUT-Server:
 ```bash
 ufw allow from 172.21.0.2/16 to any port 3493 proto tcp
+```
+
+---
+
+## How to enable or disable the Services which should be installed with the playbook
+The playbook allows to choose which specific Services should be installed and if some are not needed. 
+
+You can configure the Services inside the **"group_vars/all.yml"**. You can either set it to "True" or "False" to decide if it should be installed:
+```bash
+paperless_enabled: true
+paperless_enabled: false
 ```
 
 ---
@@ -190,7 +169,7 @@ git clone <REPO_URL>
 cd <REPO_NAME>
 ```
 
-### Step 3: Execute the playbook, keep in mind that you can "enabled" to true or false for each service in the all.yml. This will control if the services will be installed or not. 
+### Step 3: Execute the playbook
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
