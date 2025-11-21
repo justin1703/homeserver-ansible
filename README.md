@@ -190,7 +190,7 @@ git clone <REPO_URL>
 cd <REPO_NAME>
 ```
 
-### Step 3: Execute the playbook
+### Step 3: Execute the playbook, keep in mind that you can "enabled" to true or false for each service in the all.yml. This will control if the services will be installed or not. 
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
