@@ -40,6 +40,12 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 
 The home server has been upgraded to modern, efficient hardware to achieve a good balance of **performance, energy efficiency, and future readiness**.
 
+<p align="center">
+  <img src="ressources/homeserver.jpg" width="500" alt="Homeserver">
+  <br>
+  <sub><em>My Homeserver (December 2025)</em></sub>
+</p>
+
 ### Hardware Specifications
 
 | Component | Description |
