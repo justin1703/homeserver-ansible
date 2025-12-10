@@ -54,7 +54,7 @@ The home server has been upgraded to modern, efficient hardware to achieve a goo
 | **RAM** | 128 GB DDR4 @ 3200 MT/s – originally for many VMs under Proxmox, now provides plenty of headroom for containers and caching |
 | **System Drive** | 2 TB NVMe SSD – high I/O performance for system, Docker containers, and databases |
 | **Data Storage** | 2 × 4 TB HDD – plenty of space for media, backups, and persistent data |
-| **Network Card** | Dual-port 10 Gbit SFP+ – ideal for high data throughput in the home network or between NAS and backup systems |
+| **GPU** | Intel Arc Pro B50 with 16 GB VRAM – powerful for LLM workloads and Plex transcoding |
 | **Mainboard** | Gigabyte B550M AORUS ELITE AX – stable, well-equipped, and future-proof |
 | **Cooler** | NZXT low-profile CPU cooler – quiet and space-saving |
 | **Case** | Jonsbo N4 NAS case – compact design with room for multiple 3.5" HDDs |
