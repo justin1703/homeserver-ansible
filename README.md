@@ -150,11 +150,57 @@ paperless_enabled: false
 - Debian 13 with SSH access  
 - User with `sudo` privileges  
 - Ansible installed on the control machine  
-- SSH key authentication configured  
+- SSH key authentication configured
+- ansible vault file
 
 ---
 
-### Step 1: Add the User which should execute the playbook to sudo
+### Step 1: Create Vault file (stores the passwords)
+
+Create a secret.yml (make sure to specify the path inside the playbooks):
+```bash
+ansible-vault create /path/to/secrets.yml
+```
+
+Example for a secret.yml:
+
+> ⚠️ **Warning:** Make sure to change the passwords!
+
+```bash
+# ---------------------------------------------
+# SSH-Key
+# ---------------------------------------------
+vault_ssh_public_key: "<your ssh key>"
+# ---------------------------------------------
+# Nut-Server
+# ---------------------------------------------
+vault_ups_password: "changeme"
+vault_nut_user_password: "changeme"
+# ---------------------------------------------
+# Nginx
+# ---------------------------------------------
+vault_npm_user_password: "changeme"
+# ---------------------------------------------
+# Nextcloud
+# ---------------------------------------------
+vault_mysql_root_password: "changeme"
+vault_mysql_password: "changeme"
+# ---------------------------------------------
+# Pihole
+# ---------------------------------------------
+vault_pihole_password: "changeme"
+# ---------------------------------------------
+# checkmk
+# ---------------------------------------------
+vault_checkmk_password: "changeme"
+# ---------------------------------------------
+# Paperless
+# ---------------------------------------------
+vault_paperless_db_password: "changeme"
+vault_paperless_secret_key: "changeme"
+```
+
+### Step 2: Add the User which should execute the playbook to sudo
 
 ```bash
 sudo usermod -aG sudo <username>
@@ -188,14 +234,14 @@ mkdir -p /mnt/data
 mount /dev/md0 /mnt/data
 ```
 
-### Step 2: Clone the Repository
+### Step 3: Clone the Repository
 
 ```bash
 git clone <REPO_URL>
 cd <REPO_NAME>
 ```
 
-### Step 3: Execute the playbook
+### Step 4: Execute the playbook
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
