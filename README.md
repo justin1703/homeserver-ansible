@@ -19,10 +19,11 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 - [How to enable or disable the Services](#how-to-enable-or-disable-the-services-which-should-be-installed-with-the-playbook)
 - [Installation](#installation)
   - [Requirements](#requirements)
-  - [Step 1: Add the User to sudo](#step-1-add-the-user-which-should-execute-the-playbook-to-sudo)
+  - [Step 1: Setup Vault](#step-1-create-vault-file)
+  - [Step 2: Add the User to sudo](#step-2-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
-  - [Step 2: Clone the Repository](#step-2-clone-the-repository)
-  - [Step 3: Execute the playbook](#step-3-execute-the-playbook)
+  - [Step 3: Clone the Repository](#step-3-clone-the-repository)
+  - [Step 4: Execute the playbook](#step-4-execute-the-playbook)
 
 ---
 
@@ -155,7 +156,7 @@ paperless_enabled: false
 
 ---
 
-### Step 1: Create Vault file (stores the passwords)
+### Step 1: Create Vault file
 
 Create a secret.yml (make sure to specify the path inside the playbooks):
 ```bash
