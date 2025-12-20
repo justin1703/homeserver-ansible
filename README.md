@@ -15,7 +15,7 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 - [Supported Services](#supported-services)
   - [Docker Containers](#docker-containers)
   - [Bare-Metal](#bare-metal)
-- [Problems which might occure due to the Firewall Rules](#problems-which-might-occure-due-to-the-firewall-rules)
+- [Known Issues Related to Firewall Rules](#known-issues-related-to-firewall-rules)
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [Step 1: Clone the Repository](#step-1-clone-the-repository)
@@ -44,7 +44,7 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 The home server has been upgraded to modern, efficient hardware to achieve a good balance of **performance, energy efficiency, and future readiness**.
 
 <p align="center">
-  <img src="ressources/homeserver.jpg" width="500" alt="Homeserver">
+  <img src="resources/homeserver.jpg" width="500" alt="Homeserver">
   <br>
   <sub><em>My Homeserver (December 2025)</em></sub>
 </p>
@@ -57,7 +57,7 @@ The home server has been upgraded to modern, efficient hardware to achieve a goo
 | **RAM** | 128 GB DDR4 @ 3200 MT/s – originally for many VMs under Proxmox, now provides plenty of headroom for containers and caching |
 | **System Drive** | 2 TB NVMe SSD – high I/O performance for system, Docker containers, and databases |
 | **Data Storage** | 2 × 4 TB HDD – plenty of space for media, backups, and persistent data |
-| **GPU** | Intel Arc Pro B50 with 16 GB VRAM – powerful for LLM workloads and Plex transcoding |
+| **GPU** | Intel Arc Pro B50 with 16 GB VRAM – suitable for LLM workloads and Plex transcoding |
 | **Mainboard** | Gigabyte B550M AORUS ELITE AX – stable, well-equipped, and future-proof |
 | **Cooler** | NZXT low-profile CPU cooler – quiet and space-saving |
 | **Case** | Jonsbo N4 NAS case – compact design with room for multiple 3.5" HDDs |
@@ -84,7 +84,7 @@ The move to **Debian 13** was made to simplify the setup and reduce resource usa
 - Potentially lower power consumption  
 - Better integration with Ansible  
 
-The new setup runs natively on Debian and uses Docker containers for all modular services — lightweight, consistent, and easy to maintain.
+The new setup runs natively on Debian and uses Docker containers for modular services, resulting in a lightweight, consistent, and easy-to-maintain system.
 
 ---
 
@@ -114,8 +114,10 @@ The new setup runs natively on Debian and uses Docker containers for all modular
 
 ---
 
-## Problems which might occure due to the Firewall Rules
-This section provides all necessary UFW rules and other important changes which I need to add into this project afterwards.
+## Known Issues Related to Firewall Rules
+
+This section documents firewall rules that are currently required but **not yet fully automated via Ansible**.  
+These rules may be integrated into a dedicated Ansible role in the future.
 
 ### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager:
 ```bash
@@ -187,7 +189,7 @@ vault_nut_user_password: "changeme"
 # ---------------------------------------------
 # Nginx
 # ---------------------------------------------
-# Password for the 
+# Password for the Nginx Proxy Manager admin user
 vault_npm_user_password: "changeme"
 
 # ---------------------------------------------
@@ -235,6 +237,10 @@ debian13 ansible_host=SERVER_IP ansible_user=USERNAME
 
 ### Step 5: Add the User which should execute the playbook to sudo
 
+> ⚠️ **Security Note:**  
+> Granting passwordless sudo is only required for the initial installation.  
+> It is strongly recommended to remove this permission after the playbook has been executed successfully.
+
 Add your user to the sudo group:
 ```bash
 su -
@@ -247,9 +253,9 @@ sudo visudo
 <username> ALL=(ALL) NOPASSWD:ALL
 ```
 
-### Optional: Setup RAID 1 for storage
+### Optional: Manual Setup of RAID 1 for Storage
 
-> ⚠️ **Warning:** This will delete all data on `/dev/sda` and `/dev/sdb`. Only proceed if you are sure.
+> ⚠️ **Note:** This step is intentionally not automated via Ansible and is meant to be executed once during initial system setup.
 
 ```bash
 # 1. Create GPT partition tables on both drives
@@ -278,8 +284,11 @@ The playbook allows to choose which specific Services should be installed and if
 
 You can configure the Services inside the **"group_vars/all.yml"**. You can either set it to "True" or "False" to decide if it should be installed:
 ```bash
+# Enable Paperless
 paperless_enabled: true
-paperless_enabled: false
+
+# Disable Paperless
+# paperless_enabled: false
 ```
 
 ### Step 7: Execute the playbook
@@ -288,4 +297,5 @@ paperless_enabled: false
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
 ```
 
-> ⚠️ **Warning:** Make sure to reset the permissions for the installation user.
+> ⚠️ **Warning:**  
+> After the installation is complete, review and reset the sudo permissions of the installation user to maintain system security.
