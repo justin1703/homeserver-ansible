@@ -9,14 +9,6 @@
     - /srv/docker/homepage
     - /srv/docker/homepage/config
 
-- name: Deploy Homepage services.yaml
-  ansible.builtin.template:
-    src: homepage/homepage-services.yaml.j2
-    dest: /srv/docker/homepage/config/services.yaml
-    owner: "{{ docker_user }}"
-    group: "{{ docker_group }}"
-    mode: '0644'
-
 - name: Deploy Homepage settings.yaml
   ansible.builtin.template:
     src: homepage/homepage-settings.yaml.j2
