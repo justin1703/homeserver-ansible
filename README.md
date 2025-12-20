@@ -16,7 +16,6 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
   - [Docker Containers](#docker-containers)
   - [Bare-Metal](#bare-metal)
 - [Problems which might occure due to the Firewall Rules](#problems-which-might-occure-due-to-the-firewall-rules)
-- [How to enable or disable the Services](#how-to-enable-or-disable-the-services-which-should-be-installed-with-the-playbook)
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [Step 1: Clone the Repository](#step-1-clone-the-repository)
@@ -25,7 +24,8 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
   - [Step 4: Create Inventory file](#step-4-create-inventory-file)
   - [Step 5: Add the User to sudo](#step-5-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
-  - [Step 6: Execute the playbook](#step-6-execute-the-playbook)
+  - [Step 6: Enable or Disable Services](#step-6-enable-or-disable-services)
+  - [Step 7: Execute the playbook](#step-7-execute-the-playbook)
 
 ---
 
@@ -135,17 +135,6 @@ ufw allow from 172.21.0.2/16 to any port 3493 proto tcp
 
 ---
 
-## How to enable or disable the Services which should be installed with the playbook
-The playbook allows to choose which specific Services should be installed and if some are not needed. 
-
-You can configure the Services inside the **"group_vars/all.yml"**. You can either set it to "True" or "False" to decide if it should be installed:
-```bash
-paperless_enabled: true
-paperless_enabled: false
-```
-
----
-
 ## Installation
 
 ### Requirements
@@ -182,33 +171,49 @@ Example for a secret.yml:
 # ---------------------------------------------
 # SSH-Key
 # ---------------------------------------------
+# Public SSH key for connecting to servers
 vault_ssh_public_key: "<your ssh key>"
+
 # ---------------------------------------------
 # Nut-Server
 # ---------------------------------------------
+# Password for UPS configuration
 vault_ups_password: "changeme"
+# Password for the NUT user account
 vault_nut_user_password: "changeme"
+
 # ---------------------------------------------
 # Nginx
 # ---------------------------------------------
+# Password for the 
 vault_npm_user_password: "changeme"
+
 # ---------------------------------------------
 # Nextcloud
 # ---------------------------------------------
+# Password for the MySQL root user
 vault_mysql_root_password: "changeme"
+# Password for the Nextcloud MySQL user
 vault_mysql_nextcloud_password: "changeme"
+
 # ---------------------------------------------
 # Pihole
 # ---------------------------------------------
+# Password for the Pi-hole admin interface
 vault_pihole_password: "changeme"
+
 # ---------------------------------------------
 # checkmk
 # ---------------------------------------------
+# Password for the Checkmk monitoring system
 vault_checkmk_password: "changeme"
+
 # ---------------------------------------------
 # Paperless
 # ---------------------------------------------
+# Password for the Paperless database
 vault_paperless_db_password: "changeme"
+# Secret key for Paperless encryption and session management
 vault_paperless_secret_key: "changeme"
 ```
 
@@ -265,8 +270,16 @@ mkfs.ext4 /dev/md0
 mkdir -p /mnt/data
 mount /dev/md0 /mnt/data
 ```
+### Step 6: Enable or Disable Services
+The playbook allows to choose which specific Services should be installed and if some are not needed. 
 
-### Step 6: Execute the playbook
+You can configure the Services inside the **"group_vars/all.yml"**. You can either set it to "True" or "False" to decide if it should be installed:
+```bash
+paperless_enabled: true
+paperless_enabled: false
+```
+
+### Step 7: Execute the playbook
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
