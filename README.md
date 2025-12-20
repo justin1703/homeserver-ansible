@@ -163,6 +163,8 @@ mkdir vault
 ansible-vault create vault/secret.yml
 ```
 
+Note: The path for the secret.yml is defined inside the playbooks.
+
 Example for a secret.yml:
 
 > ⚠️ **Warning:** Make sure to change the passwords!
