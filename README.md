@@ -21,10 +21,10 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
   - [Requirements](#requirements)
   - [Step 1: Setup Vault](#step-1-create-vault-file)
   - [Step 2: Edit all.yml](#step-2-edit-the-necessary-values-in-the-all.yml)
-  - [Step 3: Add the User to sudo](#step-2-add-the-user-which-should-execute-the-playbook-to-sudo)
+  - [Step 3: Add the User to sudo](#step-3-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
-  - [Step 4: Clone the Repository](#step-3-clone-the-repository)
-  - [Step 5: Execute the playbook](#step-4-execute-the-playbook)
+  - [Step 4: Clone the Repository](#step-4-clone-the-repository)
+  - [Step 5: Execute the playbook](#step-5-execute-the-playbook)
 
 ---
 
@@ -246,7 +246,7 @@ git clone <REPO_URL>
 cd <REPO_NAME>
 ```
 
-### Step 4: Execute the playbook
+### Step 5: Execute the playbook
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
