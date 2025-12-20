@@ -270,6 +270,7 @@ mkfs.ext4 /dev/md0
 mkdir -p /mnt/data
 mount /dev/md0 /mnt/data
 ```
+
 ### Step 6: Enable or Disable Services
 The playbook allows to choose which specific Services should be installed and if some are not needed. 
 
@@ -284,3 +285,5 @@ paperless_enabled: false
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
 ```
+
+> ⚠️ **Warning:** Make sure to reset the permissions for the installation user.
