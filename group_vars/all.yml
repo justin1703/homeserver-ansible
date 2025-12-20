@@ -128,8 +128,8 @@ nextcloud_data: /var/www/html/data
 nextcloud_config: /var/www/html/
 nextcloud_storage: /mnt/data/Nextcloud-Data
 nextcloud_docker_data: /srv/docker/nextcloud
-mysql_root_password: "{{ vault_mysql_password }}"
-mysql_password: "{{ vault_mysql_password }}"
+mysql_root_password: "{{ vault_mysql_root_password }}"
+mysql_nextcloud_password: "{{ vault_mysql_nextcloud_password }}"
 mysql_database: nextcloud
 mysql_user: nextcloud
 
