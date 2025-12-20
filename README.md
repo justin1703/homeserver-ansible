@@ -19,11 +19,11 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 - [How to enable or disable the Services](#how-to-enable-or-disable-the-services-which-should-be-installed-with-the-playbook)
 - [Installation](#installation)
   - [Requirements](#requirements)
-  - [Step 1: Setup Vault](#step-1-create-vault-file)
-  - [Step 2: Edit all.yml](#step-2-edit-the-necessary-values-in-the-all.yml)
-  - [Step 3: Add the User to sudo](#step-3-add-the-user-which-should-execute-the-playbook-to-sudo)
+  - [Step 1: Clone the Repository](#step-1-clone-the-repository)
+  - [Step 2: Setup Vault](#step-3-create-vault-file)
+  - [Step 3: Edit all.yml](#step-3-edit-the-necessary-values-in-the-all.yml)
+  - [Step 4: Add the User to sudo](#step-4-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
-  - [Step 4: Clone the Repository](#step-4-clone-the-repository)
   - [Step 5: Execute the playbook](#step-5-execute-the-playbook)
 
 ---
@@ -157,7 +157,15 @@ paperless_enabled: false
 
 ---
 
-### Step 1: Create Vault file
+
+### Step 1: Clone the Repository
+
+```bash
+git clone <REPO_URL>
+cd <REPO_NAME>
+```
+
+### Step 2: Create Vault file
 
 Create a secret.yml (make sure to specify the path inside the playbooks):
 ```bash
@@ -202,10 +210,10 @@ vault_paperless_db_password: "changeme"
 vault_paperless_secret_key: "changeme"
 ```
 
-### Step 2: Edit the necessary values in the all.yml 
+### Step 3: Edit the necessary values in the all.yml 
 Change the values for your services inside "group_vars/all.yml".
 
-### Step 3: Add the User which should execute the playbook to sudo
+### Step 4: Add the User which should execute the playbook to sudo
 
 ```bash
 sudo usermod -aG sudo <username>
@@ -237,13 +245,6 @@ mkfs.ext4 /dev/md0
 # 4. Create mount point and mount the RAID
 mkdir -p /mnt/data
 mount /dev/md0 /mnt/data
-```
-
-### Step 4: Clone the Repository
-
-```bash
-git clone <REPO_URL>
-cd <REPO_NAME>
 ```
 
 ### Step 5: Execute the playbook
