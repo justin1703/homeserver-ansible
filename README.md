@@ -171,7 +171,7 @@ cd <REPO_NAME>
 Create a secret.yml (make sure to specify the path inside the playbooks):
 ```bash
 mkdir vault
-ansible-vault create vault/secrets.yml
+ansible-vault create vault/secret.yml
 ```
 
 Example for a secret.yml:
