@@ -20,11 +20,12 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 - [Installation](#installation)
   - [Requirements](#requirements)
   - [Step 1: Clone the Repository](#step-1-clone-the-repository)
-  - [Step 2: Setup Vault](#step-3-create-vault-file)
+  - [Step 2: Setup Vault](#step-2-create-vault-file)
   - [Step 3: Edit all.yml](#step-3-edit-the-necessary-values-in-the-all.yml)
-  - [Step 4: Add the User to sudo](#step-4-add-the-user-which-should-execute-the-playbook-to-sudo)
+  - [Step 4: Create Inventory file](#step-4-create-inventory-file)
+  - [Step 5: Add the User to sudo](#step-5-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
-  - [Step 5: Execute the playbook](#step-5-execute-the-playbook)
+  - [Step 6: Execute the playbook](#step-6-execute-the-playbook)
 
 ---
 
@@ -213,10 +214,27 @@ vault_paperless_secret_key: "changeme"
 ### Step 3: Edit the necessary values in the all.yml 
 Change the values for your services inside "group_vars/all.yml".
 
-### Step 4: Add the User which should execute the playbook to sudo
-
+### Step 4: Create inventory file:
 ```bash
+vim inventory.ini
+```
+
+Example for inventory.ini:
+```bash
+[debian_servers]
+debian13 ansible_host=SERVER_IP ansible_user=USERNAME
+```
+
+### Step 5: Add the User which should execute the playbook to sudo
+
+Add your user to the sudo group:
+```bash
+su -
 sudo usermod -aG sudo <username>
+```
+
+Add the required permissions for the user:
+```bash
 sudo visudo
 <username> ALL=(ALL) NOPASSWD:ALL
 ```
@@ -247,7 +265,7 @@ mkdir -p /mnt/data
 mount /dev/md0 /mnt/data
 ```
 
-### Step 5: Execute the playbook
+### Step 6: Execute the playbook
 
 ```bash
 ansible-playbook -i inventory.ini playbooks/server-install.yml --ask-vault-pass
