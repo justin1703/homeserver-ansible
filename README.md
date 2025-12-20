@@ -119,7 +119,9 @@ The new setup runs natively on Debian and uses Docker containers for modular ser
 This section documents firewall rules that are currently required but **not yet fully automated via Ansible**.  
 These rules may be integrated into a dedicated Ansible role in the future.
 
-### Allow Nginx Proxy Manager to reach Nextcloud, this need to be done for every Service you want to reach through the Proxy-Manager:
+### Allow Nginx Proxy Manager to reach internal services (e.g. Nextcloud)
+
+This rule must be adapted for every service that should be reachable through Nginx Proxy Manager:
 ```bash
 ufw allow from 172.21.0.0/16 to any port 8080 proto tcp
 ```
@@ -145,7 +147,7 @@ ufw allow from 172.21.0.2/16 to any port 3493 proto tcp
 - User with `sudo` privileges  
 - Ansible installed on the control machine  
 - SSH key authentication configured
-- ansible vault file
+- Ansible Vault file
 
 ---
 
@@ -179,7 +181,7 @@ Example for a secret.yml:
 vault_ssh_public_key: "<your ssh key>"
 
 # ---------------------------------------------
-# Nut-Server
+# Nut Server
 # ---------------------------------------------
 # Password for UPS configuration
 vault_ups_password: "changeme"
@@ -280,7 +282,7 @@ mount /dev/md0 /mnt/data
 ```
 
 ### Step 6: Enable or Disable Services
-The playbook allows to choose which specific Services should be installed and if some are not needed. 
+The playbook allows you to choose which specific services should be installed and which can be omitted.
 
 You can configure the Services inside the **"group_vars/all.yml"**. You can either set it to "True" or "False" to decide if it should be installed:
 ```bash
