@@ -19,8 +19,8 @@ It provides a lightweight, secure setup for Docker containers and bare-metal ser
 - [How to enable or disable the Services](#how-to-enable-or-disable-the-services-which-should-be-installed-with-the-playbook)
 - [Installation](#installation)
   - [Requirements](#requirements)
-  - [Step 1: Edit all.yml](#step-2-edit-the-necessary-values-in-the-group_vars/all.yml)
-  - [Step 2: Setup Vault](#step-1-create-vault-file)
+  - [Step 1: Setup Vault](#step-1-create-vault-file)
+  - [Step 2: Edit all.yml](#step-2-edit-the-necessary-values-in-the-all.yml)
   - [Step 3: Add the User to sudo](#step-2-add-the-user-which-should-execute-the-playbook-to-sudo)
   - [Optional: Setup RAID 1 for storage](#optional-setup-raid-1-for-storage)
   - [Step 4: Clone the Repository](#step-3-clone-the-repository)
@@ -202,7 +202,8 @@ vault_paperless_db_password: "changeme"
 vault_paperless_secret_key: "changeme"
 ```
 
-### Step 2: Edit the necessary values in the group_vars/all.yml 
+### Step 2: Edit the necessary values in the all.yml 
+Change the values for your services inside "group_vars/all.yml".
 
 ### Step 3: Add the User which should execute the playbook to sudo
 
