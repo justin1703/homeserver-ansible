@@ -194,7 +194,6 @@ vault_npm_user_password: "changeme"
 # ---------------------------------------------
 # Nextcloud
 # ---------------------------------------------
-vault_mysql_root_password: "changeme"
 vault_mysql_password: "changeme"
 # ---------------------------------------------
 # Pihole
