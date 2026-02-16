@@ -276,9 +276,21 @@ cat /proc/mdstat
 # 3. Format the RAID array with ext4 filesystem
 mkfs.ext4 /dev/md0
 
-# 4. Create mount point and mount the RAID
+# 4. Create mount point
 mkdir -p /mnt/data
-mount /dev/md0 /mnt/data
+
+# 5. Get UUID of the RAID device
+blkid /dev/md0
+
+# 6. Add RAID mount to /etc/fstab (persistent mount)
+
+# Example:
+# UUID=<UUID_FROM_BLKID>  /mnt/data  ext4  defaults,noatime,nofail  0  2
+
+vim /etc/fstab
+
+# 7. Test fstab configuration
+mount -a
 ```
 
 ### Step 6: Enable or Disable Services
